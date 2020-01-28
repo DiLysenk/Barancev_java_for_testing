@@ -1,14 +1,12 @@
 package ru.stqa.pft.addressbook;
 
+import java.util.regex.Pattern;
+import java.util.concurrent.TimeUnit;
+import org.testng.annotations.*;
+import static org.testng.Assert.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-
-import java.util.concurrent.TimeUnit;
-
-import static org.testng.Assert.fail;
+import org.openqa.selenium.support.ui.Select;
 
 public class GroupCreationTest {
     private WebDriver driver;
@@ -17,17 +15,12 @@ public class GroupCreationTest {
     private StringBuffer verificationErrors = new StringBuffer();
 
     @BeforeClass(alwaysRun = true)
-    public void setUp() throws Exception {
+    public void setUp() throws Exception {                // логин
         driver = new FirefoxDriver();
         baseUrl = "https://www.google.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get("http://localhost/addressbook/");
-        // login
-        Login();
-    }
-
-    private void Login() {
-        submitGroup("user");
+        driver.findElement(By.name("user")).click();
         driver.findElement(By.name("user")).clear();
         driver.findElement(By.name("user")).sendKeys("admin");
         driver.findElement(By.name("pass")).clear();
@@ -36,35 +29,22 @@ public class GroupCreationTest {
     }
 
     @Test
-    public void testUntitledTestCase() throws Exception {
-        driver.get("http://localhost/addressbook/");
-        Login();
-        gotoGpoupPage("groups");
-        submitGroup("new");
-        fillGroupForm();
-        submitGroup("submit");
-        gotoGpoupPage("group page");
-        gotoGpoupPage("Logout");
-    }
+    public void testUntitledTestCase() throws Exception {           // создание группы
 
-    private void submitGroup(String submit) {
-        driver.findElement(By.name(submit)).click();
-    }
-
-    private void fillGroupForm() {
-        submitGroup("group_name");
+        driver.findElement(By.linkText("groups")).click();
+        driver.findElement(By.name("new")).click();
+        driver.findElement(By.name("group_name")).click();
         driver.findElement(By.name("group_name")).clear();
         driver.findElement(By.name("group_name")).sendKeys("babasnyt098");
-        submitGroup("group_header");
+        driver.findElement(By.name("group_header")).click();
         driver.findElement(By.name("group_header")).clear();
         driver.findElement(By.name("group_header")).sendKeys("234r5");
-        submitGroup("group_footer");
+        driver.findElement(By.name("group_footer")).click();
         driver.findElement(By.name("group_footer")).clear();
         driver.findElement(By.name("group_footer")).sendKeys("fqwerf");
-    }
-
-    private void gotoGpoupPage(String groups) {
-        driver.findElement(By.linkText(groups)).click();
+        driver.findElement(By.name("submit")).click();
+        driver.findElement(By.linkText("group page")).click();
+        driver.findElement(By.linkText("Logout")).click();
     }
 
     @AfterClass(alwaysRun = true)
