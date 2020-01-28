@@ -1,27 +1,29 @@
-package ru.stqa.pft.addressbook;
+package ru.stqa.pft.addressbook.appmanager;
 
-import java.util.concurrent.TimeUnit;
-import org.testng.annotations.*;
-import static org.testng.Assert.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import ru.stqa.pft.addressbook.model.GroupDate;
 
-public class GroupCreationTest {
-    private WebDriver driver;
-    private String baseUrl;
-    private boolean acceptNextAlert = true;
-    private StringBuffer verificationErrors = new StringBuffer();
+import java.util.concurrent.TimeUnit;
 
-    @BeforeClass(alwaysRun = true)
-    public void setUp() throws Exception {                // логин
+import static org.testng.Assert.fail;
+
+public class ApplicationManager {
+    WebDriver driver;
+    String baseUrl;
+    boolean acceptNextAlert = true;
+    StringBuffer verificationErrors = new StringBuffer();
+
+    public void init() {
         driver = new FirefoxDriver();
         baseUrl = "https://www.google.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get("http://localhost/addressbook/");
         login("admin", "secret");
     }
-// создали метод login
-    private void login(String username, String password) {
+
+    // создали метод login
+    public void login(String username, String password) {
         driver.findElement(By.name("user")).click();
         driver.findElement(By.name("user")).clear();
         driver.findElement(By.name("user")).sendKeys(username);
@@ -30,16 +32,7 @@ public class GroupCreationTest {
         driver.findElement(By.id("LoginForm")).submit();
     }
 
-    @Test
-    public void testUntitledTestCase() throws Exception {           // создание группы
-        gotoGroupPage();
-        initGroupCreation();
-        fillGroupForm(new GroupDate("babasnyt098", "234r5", "fqwerf"));
-        submintGroupCreation();
-        returnGroupCreation();
-    }
-
-    private void fillGroupForm(GroupDate groupDate) {
+    public void fillGroupForm(GroupDate groupDate) {
         driver.findElement(By.name("group_name")).click();
         driver.findElement(By.name("group_name")).clear();
         driver.findElement(By.name("group_name")).sendKeys(groupDate.getName());
@@ -51,25 +44,31 @@ public class GroupCreationTest {
         driver.findElement(By.name("group_footer")).sendKeys(groupDate.getFooter());
     }
 
-
-    private void returnGroupCreation() {
+    public void returnGroupCreation() {
         driver.findElement(By.linkText("group page")).click();
     }
 
-    private void submintGroupCreation() {
+    public void submintGroupCreation() {
         driver.findElement(By.name("submit")).click();
     }
 
-    private void initGroupCreation() {
+    public void initGroupCreation() {
         driver.findElement(By.name("new")).click();
     }
 
-    private void gotoGroupPage() {
+    public void gotoGroupPage() {
         driver.findElement(By.linkText("groups")).click();
     }
 
-    @AfterClass(alwaysRun = true)
-    public void tearDown() throws Exception {
+    public void deleteSelectedGroups() {
+        driver.findElement(By.xpath("(//input[@name='delete'])[2]")).click();
+    }
+
+    public void selectGroup() {
+        driver.findElement(By.name("selected[]")).click();
+    }
+
+    public void stop() {
         driver.quit();
         String verificationErrorString = verificationErrors.toString();
         if (!"".equals(verificationErrorString)) {
@@ -77,7 +76,7 @@ public class GroupCreationTest {
         }
     }
 
-    private boolean isElementPresent(By by) {
+    public boolean isElementPresent(By by) {
         try {
             driver.findElement(by);
             return true;
@@ -86,7 +85,7 @@ public class GroupCreationTest {
         }
     }
 
-    private boolean isAlertPresent() {
+    public boolean isAlertPresent() {
         try {
             driver.switchTo().alert();
             return true;
@@ -95,7 +94,7 @@ public class GroupCreationTest {
         }
     }
 
-    private String closeAlertAndGetItsText() {
+    public String closeAlertAndGetItsText() {
         try {
             Alert alert = driver.switchTo().alert();
             String alertText = alert.getText();
