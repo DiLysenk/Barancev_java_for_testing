@@ -5,7 +5,7 @@ public class JavaPractice {
         inflation(100, 50, 2);
         chetnoe(10);
         Pologit(19.6, 6.5);
-        Otrzok(1, 9, 6);
+        Otrezok(1, 9, 6);
         random();
     }
 
@@ -24,7 +24,7 @@ public class JavaPractice {
     public static void chetnoe(int number){
 
         if (number % 2 == 0) System.out.println("chetnoe");
-        else System.out.println("ne_chetnoe");
+        else System.out.println("Задача номер 1  " + "ne_chetnoe");
      }
 
 
@@ -33,7 +33,7 @@ public class JavaPractice {
     public static void Pologit(double n, double m){
 
         if (n - 10 > m - 10) System.out.println(m);
-        else System.out.println("ne_chetnoe");
+        else System.out.println("Задача номер 2  " + "ne_chetnoe");
 
     }
     //3. Создать программу, которая будет проверять попало ли случайно выбранное из отрезка [5;155] целое число в
@@ -42,27 +42,43 @@ public class JavaPractice {
     //Число 113 не содержится в интервале (25,100). Число 72 содержится в интервале (25,100). Число 25 не содержится в
     // интервале (25,100) Число 155 не содержится в интервале (25,100)
     //
-    public static void Otrzok(int n, int m, int x){
+    public static void Otrezok(int n, int m, int x){
 
         if (x > n  & x < m) System.out.println("число " + x + " содержится в отрезке (" + n + ", " + m + ")");
 
-        else System.out.println("число " + x + " не содержится в отрезке (" + n + ", " + m + ")");
+        else System.out.println("Задача номер 3   " +  "число " + x + " не содержится в отрезке (" + n + ", " + m + ")");
 
 
     }
     //4. Создать программу, выводящую на экран случайно сгенерированное трёхзначное натуральное число и его наибольшую
     // цифру. Примеры работы программы:
+
+
     //
     //В числе 208 наибольшая цифра 8. В числе 774 наибольшая цифра 7. В числе 613 наибольшая цифра 6
     //
 
-    public static void random(){
-        int rand = (int) (Math.random() * 100);
-        x = rand / 100
+    public static void random() {
+        int rand3 = (int) (Math.random() * 100);
+        int rand = rand3;
+        int rand1 = 0;
+        int rand2 = 0;
+        while (rand > 1) {
+            System.out.println(rand1 = rand % 10);      // остаток от целого числа
+            System.out.println(rand = rand / 10);           // делим и получаем остаток от
+            if(rand1 > rand2){
+                rand2 = rand1;
 
+            }
 
-        System.out.println(rand);
+        }
+
+        System.out.println("В числе " + rand3 + " наибольшая цифра " + rand1 );
     }
+
+
+
+
 
 
 
@@ -70,7 +86,6 @@ public class JavaPractice {
     // Создать программу, которая переставит числа в переменных таким образом, чтобы при выводе на экран
     // последовательность a, b и c оказалась строго возрастающей.
     //
-
 
     //Числа в переменных a, b и c: 3, 9, -1
     //
@@ -95,7 +110,11 @@ public class JavaPractice {
     //
     //10. Создайте программу, вычисляющую факториал натурального числа n, которое пользователь введёт с клавиатуры.
     //
+
     //11. Выведите на экран все положительные делители натурального числа, введённого пользователем с клавиатуры.
+
+
+    //12.  Реализуйте метод, проверяющий, является ли заданная строка палиндромом.
 
 
 
