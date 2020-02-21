@@ -1,5 +1,11 @@
 package ru.stqa.pft.sandbox;
 
+
+
+
+
+
+
 public class JavaPractice {
     public static void main(String arg[]){
         inflation(100, 50, 2);
