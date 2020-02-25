@@ -1,21 +1,66 @@
 package ru.stqa.pft.sandbox;
 
-
-
-
-
-
+import java.awt.image.BufferStrategy;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.Buffer;
 
 public class JavaPractice {
+
+
     public static void main(String arg[]){
         inflation(100, 50, 2);
         chetnoe(10);
         Pologit(19.6, 6.5);
         Otrezok(1, 9, 6);
         random();
+        rest();
     }
 
+    public static void rest(String arg[]) {
+        String query = "http://swapi.co/api/"; // определяем конечную точку
 
+        HttpURLConnection connection = null; // создаем подключение
+        try {
+
+            connection = (HttpURLConnection) new URL(query).openConnection(); // создаем новое подключение
+
+            connection.setRequestMethod("GET");         // метод запроса
+
+            connection.setUseCaches(false);             //
+
+            connection.setConnectTimeout(250);
+
+            connection.setReadTimeout(250);
+
+            connection.connect();
+
+            StringBuilder sb = new StringBuilder();
+
+            if (HttpURLConnection.HTTP_OK == connection.getResponseCode()) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+                String line;
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                    sb.append("\n");
+
+                }
+                System.out.println(sb.toString());
+            } else {
+                System.out.println("fail400");
+            }
+
+        } catch (Throwable cause) {
+            cause.printStackTrace();
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+    }
     public static void inflation(int orig, float ir, int n){
         float cost;
         cost = orig * ((ir / 100) + 1);
@@ -80,6 +125,7 @@ public class JavaPractice {
         }
 
         System.out.println("В числе " + rand3 + " наибольшая цифра " + rand1 );
+
     }
 
 
